@@ -43,11 +43,16 @@ def manhattan(a,b):
     d = abs(ax-bx) + abs(ay-by)
     return d
 
+def main():
+    zero = (0,0)
+    #x1 = ['R98','U47','R26','D63','R33','U87','L62','D20','R33','U53','R51']
+    #x2 = ['U98','R91','D20','R16','D67','R40','U7','R15','U6','R7']
+    w1_s = set(interp(zero,w1))
+    w2_s = set(interp(zero,w2))
+    dd = [ manhattan(zero,d) for d in (w1_s & w2_s) ]
+    m = min(dd)
+    print(m)
+    return m
 
-zero = (0,0)
-x1 = ['R98','U47','R26','D63','R33','U87','L62','D20','R33','U53','R51']
-x2 = ['U98','R91','D20','R16','D67','R40','U7','R15','U6','R7']
-x1_s = set(interp(zero,x1))
-x2_s = set(interp(zero,x2))
-dd = [ manhattan(zero,d) for d in (x1_s & x2_s) ]
-m = min(dd)
+if __name__ == "__main__":
+    main()
