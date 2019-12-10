@@ -43,10 +43,11 @@ you = pp['YOU'][0]
 san = pp['SAN'][0]
 you.reverse()
 san.reverse()
-i = 0
-while (you[i] == san[i]):
-    print('you[{}] = san[{}] = {}'.format(i,i,san[i]))
-    i += 1
-i -= 1 # 'cos index from 0
-len_you = len(you) - you.index(you[i]) - 2
-len_san = len(san) - san.index(san[i]) - 2
+common_parent = 0
+while (you[common_parent] == san[common_parent]):
+    common_parent += 1
+common_parent -= 1 # 'cos index from 0
+# len of you[i]->you.index(YOU)
+# -2 'cos we don't count you[i] and YOU. 
+len_you = len(you) - you.index(you[common_parent]) - 2
+len_san = len(san) - san.index(san[common_parent]) - 2
