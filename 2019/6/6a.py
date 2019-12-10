@@ -27,7 +27,9 @@ for p in planets:
         o = orbits[cursor]
         path.append(o)
         l += 1
-        cursor = o
+        cursor = o  
     print('planet {}: path={}, len={}'.format(p,path,l))
     all_l += l
+
+print('total path lens={}'.format(all_l))
 
