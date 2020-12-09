@@ -12,7 +12,7 @@ def parse(lines):
             pgm.append((op,arg))
     return pgm
 
-def interp(pgm):
+def interp(pgm, debug=False):
     acc = 0
     pc = 0
     go = True
@@ -23,17 +23,20 @@ def interp(pgm):
     
     while (go):
         if (pc == len(pgm)):
-            print('pc={}, acc={}. terminated ok'.format(pc,acc))
+            if debug:
+                print('pc={}, acc={}. terminated ok'.format(pc,acc))
             ret = True
             break
         if pc in addr_cache:
-            print('pc={}, acc={}. already been here'.format(pc,acc))
+            if debug:
+                print('pc={}, acc={}. already been here'.format(pc,acc))
             ret = False
             break
         trace.append(pc) # trace pgm
         addr_cache.add(pc) # determine termination
         (op,arg) = pgm[pc]
-#        print('pc={}, acc={}, instr={}'.format(pc, acc, (op,arg)))
+        if debug:
+            print('pc={}, acc={}, instr={}'.format(pc, acc, (op,arg)))
         if (op == 'acc'):
             acc = acc + arg
             pc = pc + 1
@@ -48,6 +51,7 @@ def interp(pgm):
 
 def replace(x):
     op,arg = x
+    # should be a dict
     if op == 'nop':
         ret = ('jmp',arg)
     elif op == 'jmp':
@@ -56,18 +60,18 @@ def replace(x):
         ret = x
     return ret
 
-def part2():
+def part2(debug=False):
     pgm = parse(actual)
     ret, acc, trace = interp(pgm)
     count = 0
     
     for t in trace:
-        print('*** replace instr {}'.format(t))
+        if debug:
+            print(f'#{count}: trying instr pgm[{t}] {pgm[t]}')
         pgm[t] = replace(pgm[t])
         ret2, acc2, trace2 = interp(pgm)
-        print('ret={}, acc={}'.format(ret2,acc2))
         if ret2:
-            print('count = {}'.format(count))
+            print(f'#{count}: Found termination: acc={acc2} at replaced pgm[{t}]={pgm[t]}')
             break
         # un-replace
         pgm[t] = replace(pgm[t])
