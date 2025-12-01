@@ -7,16 +7,18 @@ def tick(cur_pos, dir, tick):
     zeros = 0
     current_pos = cur_pos
     current_tick = tick
-    # TODO: pull if out of for. 
+
+    # Clearer if `if` is inside `for`. But gone for efficiency/abstraction instead. 
+    if dir == "L":
+        op = (lambda x: x - 1)
+        fix = (lambda x: 99 if x == -1 else x)
+    else: # if dir == "R":
+        op = (lambda x: x + 1)
+        fix = (lambda x: 0 if x == 100 else x)
+
     for _ in range(tick):
-        if dir == "L":
-            current_pos = (current_pos - 1)
-            if current_pos == -1:
-                current_pos = 99
-        else: # if dir == "R":
-            current_pos = (current_pos + 1)
-            if current_pos == 100:
-                current_pos = 0
+        current_pos = op(current_pos)
+        current_pos = fix(current_pos)
         if current_pos == 0:
             zeros += 1
         print(f"D: tick={current_tick}, pos={current_pos}.")
