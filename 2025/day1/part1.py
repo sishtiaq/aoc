@@ -1,3 +1,4 @@
+# Day 1, Part 1
 
 def sum(cur_pos, dir, dist):
     assert(dir in ["L", "R"])
@@ -9,15 +10,7 @@ def sum(cur_pos, dir, dist):
     # no L anymore, so only R/+.
     return (cur_pos + new_dist) % 100
 
-import re
-def parse(s):
-    match = re.match(r"([LR])(\d+)", s)
-    if match:
-        dir = match.group(1)
-        dist = int(match.group(2))
-        return (dir, dist)
-    else:
-        raise ValueError("Invalid input format.")
+import lib as lib
 
 def main():
     zeros = 0
@@ -27,7 +20,7 @@ def main():
         try:
             #read line
             line = input()
-            dir, dist = parse(line)
+            dir, dist = lib.parse(line)
             next_pos = sum(cur_pos, dir, dist)
             print(f"D: {cur_pos} --{dir}{dist} --> {next_pos}")
             if next_pos == 0:

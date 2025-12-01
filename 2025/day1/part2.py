@@ -25,16 +25,7 @@ def tick(cur_pos, dir, tick):
     print(f"D:      ): {cur_pos} --{dir}{tick}--> {current_pos}. Went past {zeros} zeros.")
     return current_pos, zeros
 
-import re
-def parse(s):
-    match = re.match(r"([LR])(\d+)", s)
-    if match:
-        dir = match.group(1)
-        dist = int(match.group(2))
-        return (dir, dist)
-    else:
-        raise ValueError("Invalid input format.")
-
+import lib as lib
 def main():
     zeros = 0
     cur_pos = 50
@@ -43,7 +34,7 @@ def main():
         try:
             #read line
             line = input()
-            dir, dist = parse(line)
+            dir, dist = lib.parse(line)
             next_pos, zeros_in_this_tick = tick(cur_pos, dir, dist)
             cur_pos = next_pos
             zeros += zeros_in_this_tick
