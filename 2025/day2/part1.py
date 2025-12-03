@@ -22,14 +22,11 @@ def check(lo, hi):
             bad_ids += [maybe_bad_id]
     return bad_ids
 
-def parse(s):
-    (lo,hi) = s.split("-")
-    return (int(lo), int(hi))
-
+import lib
 def main():
     line = input()
     records = line.split(",")
-    ranges = map (lambda r: parse(r), records)
+    ranges = map (lambda r: lib.parse(r), records)
     sum_of_bad_ids = 0
     for (lo, hi) in ranges:
         bad_ids = check(lo, hi)
