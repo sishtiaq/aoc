@@ -48,7 +48,7 @@ def mask(grid, num_rows, num_cols, row, col):
         mask += [(row-1, col-1)]
     return mask
 
-def apply_mask(grid, mask):
+def conv(grid, mask):
     values = []
     for pos in mask:
         if pos in grid:
@@ -56,13 +56,9 @@ def apply_mask(grid, mask):
     return values
 
 def parse():
-    pass
-    
-def main():
     grid = {}
     grid_num_rows = 0
     grid_num_cols = None
-    # parse into grid
     while True:
         try:
             line = input()
@@ -75,23 +71,31 @@ def main():
             grid_num_rows += 1
         except EOFError:
             break
-    # print the grid
-    print_grid(grid, grid_num_rows, grid_num_cols)
-    # apply mask to each cell
+    return (grid, grid_num_rows, grid_num_cols)
+
+def mark_accessible(grid, num_rows, num_cols):  
     new_grid = grid.copy()
-#    xs = 0
-    for r in range(grid_num_rows):
-        for c in range(grid_num_cols):
+    for r in range(num_rows):
+        for c in range(num_cols):
             # only generate mask for '@' cells
             if grid.get((r, c), ' ') == '@':
-                m = mask(grid, grid_num_rows, grid_num_cols, r, c)
-                neighbours = apply_mask(grid, m)
-                neighbours_papers = [n for n in neighbours if n == '@']
-                if len(neighbours_papers) < 4:
+                m = mask(grid, num_rows, num_cols, r, c)
+                neighbours = conv(grid, m)
+                paper_neighbours = [n for n in neighbours if n == '@']
+                if len(paper_neighbours) < 4:
                     new_grid[(r, c)] = 'x'
-#                    xs += 1
                     print(f"D:  grid[{r}][{c}] has less than 4 paper neighbors.")
-    # print the new grid
+    return new_grid
+
+def main():
+    # The grid is represented by a dict (x,y) -> '.'|'@'|'x'.
+    # parse the grid
+    grid , grid_num_rows, grid_num_cols = parse()
+    # print the grid
+    print_grid(grid, grid_num_rows, grid_num_cols)
+    # new grid where the accessible locations are marked 'x'.
+    new_grid = mark_accessible(grid, grid_num_rows, grid_num_cols)
+    # # print the new grid
     print_grid(new_grid, grid_num_rows, grid_num_cols)
     count_x = sum(1 for v in new_grid.values() if v == 'x')
     print(f"Total 'x' marked: {count_x}")
