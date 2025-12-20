@@ -1,4 +1,4 @@
-# Day 6, Part 1
+# Day 7, Part 2
 import typing
 
 def find_all(ss: str, elt: chr) -> typing.Set[int]:

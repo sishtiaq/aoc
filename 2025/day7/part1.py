@@ -1,4 +1,4 @@
-# Day 6, Part 1
+# Day 7, Part 1
 
 def find_all(ss, elt):
     indices = set()
