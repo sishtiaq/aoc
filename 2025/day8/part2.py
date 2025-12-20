@@ -1,4 +1,4 @@
-# Day 6, Part 1.
+# Day 8, Part 2.
 import functools
 import typing
 
